@@ -48,13 +48,31 @@ app.use(bodyParser.json());
 
 let todos = [];
 app.get("/todos/:id", (req, res) => {
-  let r = req.params;
-  console.log(r);
-  res.json(todos);
+  const id = Number(req.params.id); // Parse the id parameter from the request URL
+
+  // Find the todo item in the todos array based on id
+  const result = todos.find((todo) => todo.id === id);
+
+  if (result) {
+    res.status(200).json(result); // Respond with the found todo item
+  } else {
+    res.status(404).send("Todo not found"); // Respond with 404 if todo with given id is not found
+  }
 });
 
 app.put("/todos/:id", (req, res) => {
-  res.json(todos);
+  const id = Number(req.params.id);
+  const todoIndex = todos.findIndex((todo) => todo.id === id);
+
+  if (todoIndex !== -1) {
+    console.log("find");
+    todos[todoIndex].title = req.body.title;
+    todos[todoIndex].description = req.body.description;
+    res.status(200).json(todos);
+  } else {
+    console.log("false");
+    res.status(404).json({ message: "Todo not found" });
+  }
 });
 
 app.delete("/todos/:id", (req, res) => {
@@ -62,17 +80,22 @@ app.delete("/todos/:id", (req, res) => {
 });
 
 app.get("/todos", (req, res) => {
-  res.json(todos);
+  // res.send()
+  res.status(201).send(todos);
 });
 
 app.post("/todos", (req, res) => {
-  console.log(req.body);
-  console.log(req.body.data);
-  todos.push(req.body.data);
-  res.status(200).send();
+  const newTodo = {
+    id: Math.floor(Math.random() * 10000),
+    title: req.body.title,
+    description: req.body.description,
+  };
+  todos.push(newTodo);
+  console.log(todos);
+  res.status(201).send(newTodo);
 });
 
 app.listen(3000, () => {
   console.log("listening");
 });
-module.exports = app;
+// module.exports = app;

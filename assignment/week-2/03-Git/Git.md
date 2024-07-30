@@ -39,10 +39,16 @@ ls \*.json
 cat index.js
 cat > index.js
 cat >> index.js
+mkdir test && cd test
+mkdir -p frontend/script
+mkdir -p frontend/html
 
 ## vi => vim command
 
 ## mv => move file (ex: mv a.txt testFolder)
+
+mv test.js frontend =>move file
+mv test.js frontend/t1.js move and rename file
 
 ## cp =>copy file (ex:cp a.txt testFolder)
 
