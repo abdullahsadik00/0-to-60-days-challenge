@@ -39,15 +39,15 @@
 
   Testing the server - run `npm run test-todoServer` command in terminal
  */
-const express = require("express");
-const bodyParser = require("body-parser");
+const express = require('express');
+const bodyParser = require('body-parser');
 
 const app = express();
 
 app.use(bodyParser.json());
 
 let todos = [];
-app.get("/todos/:id", (req, res) => {
+app.get('/todos/:id', (req, res) => {
   const id = Number(req.params.id); // Parse the id parameter from the request URL
 
   // Find the todo item in the todos array based on id
@@ -56,35 +56,41 @@ app.get("/todos/:id", (req, res) => {
   if (result) {
     res.status(200).json(result); // Respond with the found todo item
   } else {
-    res.status(404).send("Todo not found"); // Respond with 404 if todo with given id is not found
+    res.status(404).send('Todo not found'); // Respond with 404 if todo with given id is not found
   }
 });
 
-app.put("/todos/:id", (req, res) => {
+app.put('/todos/:id', (req, res) => {
   const id = Number(req.params.id);
   const todoIndex = todos.findIndex((todo) => todo.id === id);
 
   if (todoIndex !== -1) {
-    console.log("find");
+    console.log('find');
     todos[todoIndex].title = req.body.title;
     todos[todoIndex].description = req.body.description;
     res.status(200).json(todos);
   } else {
-    console.log("false");
-    res.status(404).json({ message: "Todo not found" });
+    console.log('false');
+    res.status(404).json({ message: 'Todo not found' });
   }
 });
 
-app.delete("/todos/:id", (req, res) => {
-  res.json(todos);
+app.delete('/todos/:id', (req, res) => {
+  const todoIndex = todos.findIndex((t) => t.id === parseInt(req.params.id));
+  if (todoIndex === -1) {
+    res.status(404).send();
+  } else {
+    todos.splice(todoIndex, 1);
+    res.status(200).send();
+  }
 });
 
-app.get("/todos", (req, res) => {
+app.get('/todos', (req, res) => {
   // res.send()
   res.status(201).send(todos);
 });
 
-app.post("/todos", (req, res) => {
+app.post('/todos', (req, res) => {
   const newTodo = {
     id: Math.floor(Math.random() * 10000),
     title: req.body.title,
@@ -96,6 +102,6 @@ app.post("/todos", (req, res) => {
 });
 
 app.listen(3000, () => {
-  console.log("listening");
+  console.log('listening');
 });
 // module.exports = app;
