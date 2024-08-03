@@ -36,11 +36,11 @@
     Example: DELETE http://localhost:3000/todos/123
 
     - For any other route not defined in the server return 404
-
-  Testing the server - run `npm run test-todoServer` command in terminal
  */
 const express = require('express');
 const bodyParser = require('body-parser');
+const fs = require('fs');
+const { error } = require('console');
 
 const app = express();
 
@@ -62,32 +62,51 @@ app.get('/todos/:id', (req, res) => {
 
 app.put('/todos/:id', (req, res) => {
   const id = Number(req.params.id);
-  const todoIndex = todos.findIndex((todo) => todo.id === id);
+  fs.readFile('todos.json', 'utf-8', (err, data) => {
+    if (err) throw err;
+    const todoIndex = data.findIndex((todo) => todo.id === id);
+    if (todoIndex !== -1) {
+      data[todoIndex].title = req.body.title;
+      data[todoIndex].description = req.body.description;
 
-  if (todoIndex !== -1) {
-    console.log('find');
-    todos[todoIndex].title = req.body.title;
-    todos[todoIndex].description = req.body.description;
-    res.status(200).json(todos);
-  } else {
-    console.log('false');
-    res.status(404).json({ message: 'Todo not found' });
-  }
+      fs.writeFile('todos.json', JSON.stringify(data), (err, data) => {
+        if (err) throw err;
+        res.status(201).send({ data });
+      });
+    } else {
+      console.log('false');
+      res.status(404).json({ message: 'Todo not found' });
+    }
+  });
+
+  //   console.log('find');
+  //   res.status(200).json(todos);
+  // }
 });
 
 app.delete('/todos/:id', (req, res) => {
-  const todoIndex = todos.findIndex((t) => t.id === parseInt(req.params.id));
-  if (todoIndex === -1) {
-    res.status(404).send();
-  } else {
-    todos.splice(todoIndex, 1);
-    res.status(200).send();
-  }
+  fs.readFile('todos.json', 'utf-8', (err, data) => {
+    if (err) throw err;
+    data = JSON.parse(data);
+    const todoIndex = data.findIndex((t) => t.id === parseInt(req.params.id));
+    if (todoIndex === -1) {
+      res.status(404).send();
+    } else {
+      data.splice(todoIndex, 1);
+      fs.writeFile('todos.json', JSON.stringify(data), (err, data) => {
+        if (err) throw err;
+        res.status(200).json(data);
+      });
+    }
+  });
 });
 
 app.get('/todos', (req, res) => {
   // res.send()
-  res.status(201).send(todos);
+  fs.readFile('todos.json', 'utf-8', (err, data) => {
+    if (err) throw err;
+    res.status(201).send(data);
+  });
 });
 
 app.post('/todos', (req, res) => {
@@ -96,9 +115,18 @@ app.post('/todos', (req, res) => {
     title: req.body.title,
     description: req.body.description,
   };
-  todos.push(newTodo);
-  console.log(todos);
-  res.status(201).send(newTodo);
+  fs.readFile('todos.json', 'utf-8', (err, data) => {
+    if (err) throw err;
+    const todos = JSON.parse(data);
+    todos.push(newTodo);
+    fs.writeFile('todos.json', JSON.stringify(todos), (err, data) => {
+      if (err) throw err;
+      res.status(201).json(newTodo);
+    });
+  });
+  // todos.push(newTodo);
+  // console.log(todos);
+  // res.status(201).send(newTodo);
 });
 
 app.listen(3000, () => {
