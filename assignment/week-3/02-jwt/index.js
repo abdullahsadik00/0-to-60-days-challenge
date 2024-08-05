@@ -15,7 +15,6 @@ const z = require('zod');
  */
 function signJwt(username, password) {
   // Your code here
-  // https://gist.github.com/hkirat/00021cb1ff4ad72252822a2a9bee7af2 -> contains the syntax of zod
   const response1 = z.string().email().safeParse(username);
   const response2 = z.string().min(6).safeParse(password);
 
