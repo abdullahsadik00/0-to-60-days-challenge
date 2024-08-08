@@ -1,16 +1,12 @@
 const { Router } = require("express");
 const router = Router();
 const userMiddleware = require("../middleware/user");
-<<<<<<< HEAD
 const { User, Course } = require("../db");
 const { default: mongoose } = require("mongoose");
-=======
->>>>>>> 1931795ddae93232f7284b8b07ffb2e35fb6e14c
 
 // User Routes
 router.post('/signup', (req, res) => {
     // Implement user signup logic
-<<<<<<< HEAD
     const username = req.body.username;
     const password = req.body.password;
     User.create({
@@ -65,20 +61,6 @@ router.get('/purchasedCourses', userMiddleware, async (req, res) => {
     res.json({
         courses: courses
     })
-=======
-});
-
-router.get('/courses', (req, res) => {
-    // Implement listing all courses logic
-});
-
-router.post('/courses/:courseId', userMiddleware, (req, res) => {
-    // Implement course purchase logic
-});
-
-router.get('/purchasedCourses', userMiddleware, (req, res) => {
-    // Implement fetching purchased courses logic
->>>>>>> 1931795ddae93232f7284b8b07ffb2e35fb6e14c
 });
 
 module.exports = router

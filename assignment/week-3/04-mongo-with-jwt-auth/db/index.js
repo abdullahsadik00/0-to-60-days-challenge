@@ -5,30 +5,31 @@ mongoose.connect(
   'mongodb+srv://sadik:Sadik%403012@cluster0.7v7sara.mongodb.net/course_selling_app'
 );
 
-
 // Define schemas
 const AdminSchema = new mongoose.Schema({
   // Schema definition here
   username: String,
-  password: String
+  password: String,
 });
 
 const UserSchema = new mongoose.Schema({
   // Schema definition here
   username: String,
   password: String,
-  purchasedCourses: [{
+  purchasedCourses: [
+    {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Course'
-  }]
+      ref: 'Course',
+    },
+  ],
 });
 
 const CourseSchema = new mongoose.Schema({
   // Schema definition here
   title: String,
   description: String,
+  price: Number,
   imageLink: String,
-  price: Number
 });
 
 const Admin = mongoose.model('Admin', AdminSchema);
@@ -38,5 +39,5 @@ const Course = mongoose.model('Course', CourseSchema);
 module.exports = {
   Admin,
   User,
-  Course
-}
+  Course,
+};
