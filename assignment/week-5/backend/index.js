@@ -1,4 +1,6 @@
 const express = require('express')
+const {createTodo} = require('./types')
+const {updateTodo} = require('./types')
 
 const app = express();
 app.use(express.json())
@@ -8,9 +10,24 @@ app.get('/todos',(req,res)=>{
 })
 
 app.post('/todo',(req,res)=>{
-    console.log()
+    const createPayload = req.body; 
+    const parsedPayload = createTodo.safeParse(createPayload)
+    if(!parsedPayload){
+        res.status(411).json({
+            msg :"Incorrect Format"
+        })
+        return
+    } 
 })
 
 app.put('/completed',(req,res)=>{
-    console.log()
+    const updatePayload = req.body
+    const parsedPayload = updateTodo.safeParse(updatePayload);
+    
+    if(!parsedPayload){
+        res.status(411).json({
+            msg:"Incorect data"
+        })
+        return
+    }
 })
