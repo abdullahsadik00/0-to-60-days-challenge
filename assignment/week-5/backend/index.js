@@ -60,3 +60,8 @@ app.put('/completed', async (req, res) => {
     msg: 'Todo updated successfully',
   });
 });
+
+
+app.listen(3000,()=>{
+    console.log("Lisen to the port 3000")
+})
