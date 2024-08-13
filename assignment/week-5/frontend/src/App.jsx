@@ -1,27 +1,27 @@
 import { useEffect, useState } from 'react';
-// import reactLogo from './assets/react.svg';
-// import viteLogo from '/vite.svg';
 import './App.css';
 import { CreateTodo } from './components/CreateTodo';
 import { Todos } from './components/Todos';
 
 function App() {
-  const [todos, setTodos] = useState();
+  const [todos, setTodos] = useState([]);  // Initialize with an empty array
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        fetch('http://localhost:3000/todos').then(async (res) => {
-          const json = await res.json();
-          console.log(json);
-          setTodos(json.Todos);
-        });
-        console.log("todos",todos)
+        const res = await fetch('http://localhost:3000/todos');
+        const json = await res.json();
+        console.log(json);  // Check the fetched data
+        setTodos(json.Todos || []);  // Use json.Todos and provide a fallback
       } catch (error) {
-        console.log("error",error)
+        console.error('Error fetching todos:', error);
       }
     };
-    fetchData()
-  }, []);
+
+    fetchData();  // Call fetchData to actually fetch the data
+  }, []);  // Empty dependency array means this runs once when the component mounts
+
+  console.log("todos", todos);  // This will log the updated state after a re-render
 
   return (
     <div>
