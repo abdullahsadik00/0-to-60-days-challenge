@@ -1,10 +1,12 @@
 const express = require('express');
+const cors = require('cors')
 const { createTodo } = require('./types');
 const { updateTodo } = require('./types');
 const { Todos } = require('./db');
 
 const app = express();
 app.use(express.json());
+app.use(cors())
 
 app.get('/todos', (req, res) => {
   Todos.find({})
