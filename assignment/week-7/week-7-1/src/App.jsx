@@ -1,21 +1,25 @@
-import React, { Suspense } from 'react';
+import {  Suspense, lazy } from 'react';
+
 import { BrowserRouter, Route, Routes, useNavigate } from 'react-router-dom';
 import './App.css';
-// const Dashboard = lazy(() => import('./components/Dashboard'));
-// const Landing = lazy(() => import('./components/Landing'));
-import Landing from './compenents/Landing';
+    
+const Landing = lazy(() => import('./compenents/Landing'));
+const Dashboard = lazy(() => import('./compenents/Dashboard.jsx'));
 
 function App() {
   return (
     <div>
       <BrowserRouter>
+      <Suspense fallback={"<Loading />"}>
+
         <AppBar />
         <Routes>
             
-          {/* <Route path="/dashboard" element={<Suspense fallback={"loading"}><Dashboard /></Suspense>} /> */}
+          <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/" element={<Landing />} />
         </Routes>
-      </BrowserRouter>
+        </Suspense>
+        </BrowserRouter>
     </div>
   );
 }
