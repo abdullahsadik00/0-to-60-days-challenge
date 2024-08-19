@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { RecoilRoot, useRecoilState, useRecoilValue } from 'recoil';
+import { RecoilRoot, useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { countAtom } from './store/atoms/count';
 
 const PropDrilling = () => {
@@ -33,11 +33,13 @@ const CountRenderer = () => {
 
 const Buttons = () => {
   //   const {count,setCount} = useContext(CountContext)
-  const [count, setCount] = useRecoilState(countAtom);
+//   const [count, setCount] = useRecoilState(countAtom);
+const setCount = useSetRecoilState(countAtom)
+console.log("re-rendering")
   return (
     <div>
-      <button onClick={() => setCount(count - 1)}>decrease</button>
-      <button onClick={() => setCount(count + 1)}>increase</button>
+      <button onClick={() => setCount(count =>count - 1)}>decrease</button>
+      <button onClick={() => setCount(count =>count + 1)}>increase</button>
     </div>
   );
 };
