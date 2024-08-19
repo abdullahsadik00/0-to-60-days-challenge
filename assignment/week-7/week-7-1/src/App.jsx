@@ -3,18 +3,16 @@ import {  Suspense, lazy } from 'react';
 import { BrowserRouter, Route, Routes, useNavigate } from 'react-router-dom';
 import './App.css';
     
-const Landing = lazy(() => import('./compenents/Landing'));
-const Dashboard = lazy(() => import('./compenents/Dashboard.jsx'));
+const Landing = lazy(() => import('./components/Landing.jsx'));
+const Dashboard = lazy(() => import('./components/Dashboard.jsx'));
 import PropDrilling from './PropDrilling.jsx';
 function App() {
   return (
     <div>
       <BrowserRouter>
       <Suspense fallback={"<Loading />"}>
-
         <AppBar />
-        <Routes>
-            
+        <Routes> 
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/" element={<Landing />} />
         </Routes>
