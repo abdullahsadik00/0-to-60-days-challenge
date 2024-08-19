@@ -5,7 +5,7 @@ import './App.css';
     
 const Landing = lazy(() => import('./compenents/Landing'));
 const Dashboard = lazy(() => import('./compenents/Dashboard.jsx'));
-
+import PropDrilling from './PropDrilling.jsx';
 function App() {
   return (
     <div>
@@ -20,6 +20,7 @@ function App() {
         </Routes>
         </Suspense>
         </BrowserRouter>
+        <PropDrilling/>
     </div>
   );
 }
