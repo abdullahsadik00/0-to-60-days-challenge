@@ -6,6 +6,7 @@ import './App.css';
 const Landing = lazy(() => import('./components/Landing.jsx'));
 const Dashboard = lazy(() => import('./components/Dashboard.jsx'));
 import PropDrilling from './PropDrilling.jsx';
+import Todo from './components/Todo.jsx';
 function App() {
   return (
     <div>
@@ -15,10 +16,11 @@ function App() {
         <Routes> 
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/" element={<Landing />} />
+          <Route path="/prop" element={<PropDrilling />} />
+          <Route path="/todo" element={<Todo />} />
         </Routes>
         </Suspense>
         </BrowserRouter>
-        <PropDrilling/>
     </div>
   );
 }
@@ -43,6 +45,20 @@ function AppBar() {
           }}
         >
           Dashboard
+        </button>
+        <button
+          onClick={() => {
+            navigate('/prop');
+          }}
+        >
+          Prop PropDrilling
+        </button>
+        <button
+          onClick={() => {
+            navigate('/todo');
+          }}
+        >
+          Todo
         </button>
       </div>
     </div>
