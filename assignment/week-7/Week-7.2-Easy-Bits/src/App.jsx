@@ -1,16 +1,19 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import reactLogo from './assets/react.svg';
 import viteLogo from '/vite.svg';
 import './App.css';
-import { RecoilRoot, useRecoilValue } from 'recoil';
+import { RecoilRoot, useRecoilState, useRecoilValue } from 'recoil';
 import {
-  jobsAtom,
-  meAtom,
-  messagingAtom,
-  networkAtom,
-  notificationAtom,
+  // jobsAtom,
+  // meAtom,
+  // messagingAtom,
+  // networkAtom,
+  // notificationAtom,
+  notifications,
+  // totalNotificationSelector,
   totalNotificationSelector,
 } from './store/atom/NotificationBar';
+import axios from 'axios';
 
 function App() {
   const [count, setCount] = useState(0);
@@ -27,18 +30,24 @@ function App() {
 export default App;
 
 const NavBar = () => {
-  const network = useRecoilValue(networkAtom);
-  const jobs = useRecoilValue(jobsAtom);
-  const notification = useRecoilValue(notificationAtom);
-  const messaging = useRecoilValue(messagingAtom);
-  const me = useRecoilValue(totalNotificationSelector);
+  const [networkCount,setNetworkCount] = useRecoilState(notifications);
+  const totalNotificationCount = useRecoilValue(totalNotificationSelector)
+  // const jobs = useRecoilValue(jobsAtom);
+  // const notification = useRecoilValue(notificationAtom);
+  // const messaging = useRecoilValue(messagingAtom);
+  // const me = useRecoilValue(totalNotificationSelector);
+
+  useEffect(()=>{
+    axios.get('https://sum-server.100xdevs.com/notifications')
+   .then(res=>{setNetworkCount(res.data)}) 
+  },[])
   return (
     <div>
-      <button>My Network ({network})</button>
-      <button>Jobs ({jobs})</button>
-      <button>Notification ({notification >= 100 ?"99+":notification})</button>
-      <button>Messaging ({messaging}) </button>
-      <button>Me ({me})</button>
+      <button>My Network ({networkCount.network})</button>
+      <button>Jobs ({networkCount.jobs})</button>
+      <button>Notification ({networkCount.notifications >= 100 ?"99+":networkCount.notifications})</button>
+      <button>Messaging ({networkCount.messaging}) </button>
+      <button>Me ({totalNotificationCount})</button>
     </div>
   );
 };
