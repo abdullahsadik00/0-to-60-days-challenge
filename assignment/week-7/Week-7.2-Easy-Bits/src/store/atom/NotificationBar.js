@@ -1,4 +1,5 @@
-import { atom, selector } from "recoil";
+import { atom, selector } from 'recoil';
+import axios from 'axios';
 
 // export const networkAtom = atom({
 //     key:'networkAtom',
@@ -32,14 +33,34 @@ import { atom, selector } from "recoil";
 // })
 
 export const notifications = atom({
-    key:'networkAtom',
-    default:{"network":0,"jobs":0,"messaging":0,"notifications":0}
-})
+  key: 'networkAtom',
+  //   default: {
+  //     network: 0,
+  //     jobs: 0,
+  //     messaging: 0,
+  //     notifications: 0,
+  //   },
+  default: selector({
+    key: 'networkAtomSelector',
+    get: async () => {
+    //   await new Promise((r) => setTimeout(r, 5000));
+      const res = await axios.get(
+        'https://sum-server.100xdevs.com/notifications'
+      );
+      return res.data;
+    },
+  }),
+});
 
 export const totalNotificationSelector = selector({
-    key :"totalNotificationSelector",
-    get:({get})=>{
-        const allNotification = get(notifications);
-        return allNotification.network + allNotification.jobs+allNotification.messaging+allNotification.notifications
-    }
-})
+  key: 'totalNotificationSelector',
+  get: ({ get }) => {
+    const allNotification = get(notifications);
+    return (
+      allNotification.network +
+      allNotification.jobs +
+      allNotification.messaging +
+      allNotification.notifications
+    );
+  },
+});
