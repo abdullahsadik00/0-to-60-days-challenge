@@ -1,32 +1,54 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react';
 
 const App = () => {
+  const [render,setRender] = useState(true)
+  useEffect(()=>{
+    setTimeout(()=>{
+      setRender(false)
+    },10000)
+  },[])
   return (
-    <div>App
-      <MyComponent/>
+    <div>
+      App
+      {render ?
+      <MyComponent />
+      :""
+      }
     </div>
-  )
-}
+  );
+};
 
-
+// function MyComponent() {
+//   useEffect(() => {
+//     // Perform setup or data fetching here
+//     console.log('component mounted');
+//     return () => {
+//       // Cleanup code (similar to componentWillUnmount)
+//       console.log('component unmounted');
+//     };
+//   }, []);
+//   // Render UI
+//   return(<div>
+//     Component
+//   </div>)
+// }
 class MyComponent extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { count: 0 };
+  componentDidMount() {
+    // Perform setup or data fetching here
+    console.log("Components mounted")
   }
 
-  incrementCount = () => {
-    this.setState({ count: this.state.count + 1 });
+  componentWillUnmount() {
+    // Clean up (e.g., remove event listeners or cancel subscriptions)
+    console.log("Components unmounted")
   }
 
   render() {
-    return (
-      <div>
-        <p>{this.state.count}</p>
-        <button onClick={this.incrementCount}>Increment</button>
-      </div>
-    );
+    // Render UI
+    return <div>
+      My component class based
+    </div>
   }
 }
 
-export default App
+export default App;
