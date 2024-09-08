@@ -27,3 +27,19 @@ function delayedCall(fn: () => void) {
 delayedCall(function () {
   console.log('hi there');
 });
+
+
+
+interface User{
+    firstname:string,
+    lastname:string,
+    age:number
+}
+function isLegal1(user:User){
+    if(user.age>18){
+        console.log("Legal")
+    }else{
+        console.log("ILLegal")
+    }
+
+}
