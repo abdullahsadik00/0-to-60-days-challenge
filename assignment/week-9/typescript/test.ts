@@ -43,3 +43,55 @@ function isLegal1(user:User){
     }
 
 }
+
+interface Person {
+  name:string,
+  age:number,
+  greet(phrase:string):void
+}
+
+class Employee implements Person{
+  name: string;
+  age: number;
+
+  constructor(n:string,a:number){
+    this.name= n;
+    this.age = a;
+  }
+  greet(phrase: string): void {
+    console.log(`${phrase} ${this.name}`)
+  }
+}
+
+type User1 = {
+	firstName: string;
+	lastName: string;
+	age: number
+}
+
+type StringOrNumber = string | number;
+
+function printId(id: StringOrNumber) {
+  console.log(`ID: ${id}`);
+}
+
+printId(101); // ID: 101
+printId("202"); // ID: 202
+
+type Employee1 = {
+  name: string;
+  startDate: Date;
+};
+
+type Manager = {
+  name: string;
+  department: string;
+};
+
+type TeamLead = Employee1 & Manager;
+
+const teamLead: TeamLead = {
+  name: "harkirat",
+  startDate: new Date(),
+  department: "Software developer"
+};
