@@ -1,4 +1,5 @@
 "use strict";
+// const app = express()
 const x = 1;
 console.log(x);
 function greet(firstname) {
@@ -51,5 +52,39 @@ const teamLead = {
     startDate: new Date(),
     department: "Software developer"
 };
-
-
+function filteredUsers(users) {
+    return users.filter(x => x.age >= 18);
+}
+console.log(filteredUsers([{
+        firstName: "harkirat",
+        lastName: "Singh",
+        age: 21
+    }, {
+        firstName: "Raman",
+        lastName: "Singh",
+        age: 16
+    },]));
+var Direction;
+(function (Direction) {
+    Direction["Up"] = "UP";
+    Direction["Down"] = "Down";
+    Direction["Left"] = "Left";
+    Direction["Right"] = "Right";
+})(Direction || (Direction = {}));
+function doSomething(keyPressed) {
+    // do something.
+}
+doSomething(Direction.Down);
+var ResponseStatus;
+(function (ResponseStatus) {
+    ResponseStatus[ResponseStatus["Success"] = 200] = "Success";
+    ResponseStatus[ResponseStatus["NotFound"] = 404] = "NotFound";
+    ResponseStatus[ResponseStatus["Error"] = 500] = "Error";
+})(ResponseStatus || (ResponseStatus = {}));
+// app.get("/", (req, res) => {
+//   if (!req.query.userId) {
+//     res.status(ResponseStatus.Error).json({})
+//   }
+//   // and so on...
+//   res.status(ResponseStatus.Success).json({});
+// })
