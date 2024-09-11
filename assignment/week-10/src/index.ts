@@ -16,7 +16,17 @@ async function createUserTable() {
             created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
         );
     `);
-    console.log(result)
+  console.log(result);
 }
 
-createUserTable();
+// createUserTable();
+
+async function insertDataIntoTable() {
+  await client.connect();
+  const result = await client.query(`
+    INSERT INTO users (username, email, password)
+VALUES ('SadikShaikh', 'Sadikshaikh@example.com', '123456');
+    `);
+  console.log(result);
+}
+insertDataIntoTable();
