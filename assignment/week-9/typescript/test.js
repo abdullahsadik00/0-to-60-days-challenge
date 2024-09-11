@@ -87,4 +87,9 @@ var ResponseStatus;
 //   }
 //   // and so on...
 //   res.status(ResponseStatus.Success).json({});
-// })
+// })ch
+function firstElement(arr) {
+    return arr[0];
+}
+const el = firstElement(["Sadik", "Shaikh", "24"]);
+console.log(el);

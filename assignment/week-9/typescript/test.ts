@@ -142,4 +142,10 @@ enum ResponseStatus {
 //   }
 //   // and so on...
 //   res.status(ResponseStatus.Success).json({});
-// })
+// })ch
+
+function firstElement<T>(arr:T[]){
+  return arr[0]
+}
+const el = firstElement<string>(["Sadik","Shaikh","24"])
+console.log(el)
